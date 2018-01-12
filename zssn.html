@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script src="zssn.js"></script>
+    </head>
+    <body>
+
+        <input type="button" value="New Survivor" onclick="toggleNewSurvivorForm()">
+        
+        <form method="post" action="http://zssn-backend-example.herokuapp.com/api/people.json" id="new_survivor_form">
+            <label for="person[name]" required>Name:</label>
+            <input  type="text" name="person[name]">
+            <br><br>
+            <label for="person[age]">Age:</label>
+            <input  type="number" name="person[age]">
+            <br><br>
+            <label for="gender">Gender:</label>
+            <br>
+            <input  type="radio" value="M" id="male" name="person[gender]">
+            <label for="male">Male</label>
+            <input  type="radio"  value="F" id="female" name="person[gender]">
+            <label for="male">Female</label>
+            <br><br>
+            <label>Inventory</label>
+            <br>
+            <label for="water">Water:</label>
+            <input type="number" id="water">
+            <br>
+            <label for="food">Food:</label>
+            <input type="number" id="food">
+            <br>
+            <label for="medication">Medication:</label>
+            <input type="number" id="medication">
+            <br>
+            <label for="ammunition">Ammunition:</label>
+            <input type="number" id="ammunition">
+            <input type="hidden" name="items">
+
+            <input type="submit" onsubmit="fillItemsInput()" value="Send">
+        </form>
+        
+        <h1>Active Survivors</h1>
+        <table>
+            <thead>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Infected</th>
+                <th>Last Location</th>
+            </thead>
+            <tbody id="survivors_list">
+            </tbody>
+        </table>
+    </body>
+</html>
