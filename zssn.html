@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="style.css">
         <script src="zssn.js"></script>
+        <script src="map.js"></script>
     </head>
     <body>
 
@@ -38,9 +39,17 @@
             <label for="ammunition">Ammunition:</label>
             <input type="number" id="ammunition">
             <input type="hidden" name="items">
+            <label>Location</label>
+            <br>
+            <p>Longitude: <span id="longitude"></span></p>
+            <p>Latitude: <span id="latitude"></span></p>
+            <input type="hidden" name="person[lonlat]">
 
-            <input type="submit" onsubmit="fillItemsInput()" value="Send">
+        <input type="submit" onsubmit="fillItemsInput()" value="Send">
         </form>
+
+        <div id="map"></div>
+
         
         <h1>Active Survivors</h1>
         <table>
@@ -55,4 +64,5 @@
             </tbody>
         </table>
     </body>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJ5vS1Yb4hHCteVkALhYr6yUagQHYBAnM&callback=initMap"></script>
 </html>
