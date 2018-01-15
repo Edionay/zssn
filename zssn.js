@@ -41,11 +41,11 @@ function toggleNewSurvivorForm() {
 
 function fillItemsInput() {
     const form = document.getElementById('new_survivor_form');
-    const water = document.getElementById('water');
-    const food = document.getElementById('food');
-    const medicine = document.getElementById('medicine');
-    const ammunition = document.getElementById('ammunition');
-    const items = "Water:"+water+";Food:"+food+";Medicine:"+medicine+";Ammunition:"+ammunition;
+    const water = document.getElementById('water').value;
+    const food = document.getElementById('food').value;
+    const medication = document.getElementById('medication').value;
+    const ammunition = document.getElementById('ammunition').value;
+    const items = "Water:"+water+";Food:"+food+";Medicine:"+medication+";Ammunition:"+ammunition;
     form.elements.namedItem('items').value = items;
     return true;
 }
