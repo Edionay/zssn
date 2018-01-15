@@ -16,6 +16,7 @@ function showSurvivors(survivorsList) {
     const survivorsTable = document.getElementById('survivors_list');
     for (const survivor of survivorsList) {
         const newRow = survivorsTable.insertRow();
+        newRow.id = getSurvivorIdFromPath(survivor.location);
         let nameCell = newRow.insertCell(0);
         let ageCell = newRow.insertCell(1);
         let genderCell = newRow.insertCell(2);
@@ -62,4 +63,13 @@ function fillLocationFields(latlon) {
 
 function parseLatlonToPointString(latlon) {
     return `Point(${latlon.lon} ${latlon.lat})`;
+}
+
+function getSurvivorIdFromPath(locationPath) {
+    const splittedPath = locationPath.split('/');
+    return survivorId = splittedPath[5];
+}
+
+function updateLocation() {
+    
 }

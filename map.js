@@ -5,7 +5,6 @@ function initMap() {
       center: defaultPosition
     });    
 
-        // Try HTML5 geolocation.
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
         var pos = {
