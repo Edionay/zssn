@@ -11,7 +11,7 @@
 
         <input type="button" value="New Survivor" onclick="toggleNewSurvivorForm()">
         
-        <form method="post" action="http://zssn-backend-example.herokuapp.com/api/people.json" id="new_survivor_form">
+        <form method="post" onsubmit="fillItemsInput()" action="http://zssn-backend-example.herokuapp.com/api/people.json" id="new_survivor_form">
             <label for="person[name]" required>Name:</label>
             <input  type="text" name="person[name]">
             <br><br>
@@ -45,7 +45,7 @@
             <p>Latitude: <span id="latitude"></span></p>
             <input type="hidden" name="person[lonlat]">
 
-        <input type="submit" onsubmit="fillItemsInput()" value="Send">
+        <input type="submit" value="Send">
         </form>
 
         <div id="map"></div>
