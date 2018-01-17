@@ -11,18 +11,36 @@ function parseLatlonToPointString(latlon) {
     return `Point(${latlon.lon} ${latlon.lat})`;
 }
 
-function fillItemsInput() {
-    const form = document.getElementById('new_survivor_form');
+function onFormSubmitted(event) {
+
+    const myForm = document.getElementById('new_survivor_form');
+    const form = new FormData();
+
     const water = document.getElementById('water').value;
     const food = document.getElementById('food').value;
     const medication = document.getElementById('medication').value;
     const ammunition = document.getElementById('ammunition').value;
     const items = "Water:"+water+";Food:"+food+";Medicine:"+medication+";Ammunition:"+ammunition;
-    form.elements.namedItem('items').value = items;
+    myForm.elements.namedItem('items').value = items;
     const lat = document.getElementById('latitude').innerText;
     const lon = document.getElementById('longitude').innerText;
-    form.elements.namedItem('person[lonlat]').value = parseLatlonToPointString({lat, lon});
-    return true;
+    myForm.elements.namedItem('person[lonlat]').value = parseLatlonToPointString({lat, lon});
+
+    form.append('person[name]', myForm.elements.namedItem('person[name]').value);
+    form.append('person[age]', myForm.elements.namedItem('person[age]').value);
+    form.append('person[gender]', myForm.elements.namedItem('person[gender]').value);
+    form.append('person[lonlat]', myForm.elements.namedItem('person[lonlat]').value);
+    form.append('items]', myForm.elements.namedItem('items').value);
+
+    const request = new XMLHttpRequest();
+    request.open('POST', 'http://zssn-backend-example.herokuapp.com/api/people.json');
+    request.responseType = 'json';
+    request.onload = () => {
+        console.log(request.status);
+    };
+    request.send(form);
+    event.preventDefault();
+
 }
 
 function requestSurvivor() {
@@ -76,10 +94,6 @@ function showSurvivors(survivorsList) {
         const newRow = survivorsTable.insertRow();
         let iconCell = newRow.insertCell(0);
         let nameCell = newRow.insertCell(1);
-        // let ageCell = newRow.insertCell(1);
-        // let genderCell = newRow.insertCell(2);
-        // let infectedCell = newRow.insertCell(3);
-        // let locationCell = newRow.insertCell(4);
 
         nameCell.innerText = survivor.name;
         const iconLink = document.createElement('a');
@@ -90,10 +104,7 @@ function showSurvivors(survivorsList) {
         iconLink.addEventListener('click', flagSurvivor);
         iconToLink.id = getSurvivorIdFromPath(survivor.location);
         iconCell.appendChild(iconLink);
-        // ageCell.innerText = survivor.age;
-        // genderCell.innerText = survivor.gender;
-        // infectedCell.innerText = survivor['infected?'] ? 'Yes' : 'No';
-        // locationCell.innerText = survivor.lonlat;
+
     }
 }
 
@@ -109,14 +120,7 @@ function survivorsFilterByName() {
         } else {
             survivor.style.display = 'none';
         }
-    };
-    //
-    // const term = document.getElementById('infected_name').value.toLowerCase();
-    // let filteredSurvivors = survivorsList.filter(survivor => {
-    //     return survivor.name.toLocaleLowerCase().includes(term);
-    // });
-    // showSurvivors(filteredSurvivors);
-    // console.log(filteredSurvivors);
+    }
 }
 
 function flagSurvivor(event) {

@@ -47,7 +47,7 @@ function placeMarkerAndPanTo(latLng, map) {
       map: map
     });
     markers.push(marker);
-    map.panTo(latLng);
+    // map.panTo(latLng);
 }
 
 function clearMarker(map) {

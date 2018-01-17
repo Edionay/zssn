@@ -9,9 +9,7 @@
     <script src="shared.js"></script>
 </head>
 <body>
-<form method="post" class="wrapper" onsubmit="fillItemsInput()"
-      action="http://zssn-backend-example.herokuapp.com/api/people.json"
-      id="new_survivor_form">
+<form class="wrapper" id="new_survivor_form" onsubmit="onFormSubmitted(event)">
     <h1 id="title">New Survivor</h1>
     <div class="left_col">
         <div class="form_element">
@@ -35,19 +33,19 @@
         <div class="form_element" id="inventory">
             <label>Inventory</label>
             <div class="item">
-                <input type="number" id="water" value="0">
+                <input type="number" id="water" value="0" required>
                 <label class="item" for="water">Water</label>
             </div>
             <div class="item">
-                <input type="number" id="food" value="0">
+                <input type="number" id="food" value="0" required>
                 <label class="item" for="food">Food</label>
             </div>
             <div class="item">
-                <input type="number" id="medication" value="0">
+                <input type="number" id="medication" value="0" required>
                 <label class="item" for="medication">Medication</label>
             </div>
             <div class="item">
-                <input type="number" id="ammunition" value="0">
+                <input type="number" id="ammunition" value="0" required>
                 <label class="item" for="ammunition">Ammunition</label>
             </div>
             <input type="hidden" name="items">
