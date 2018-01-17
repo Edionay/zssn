@@ -1,18 +1,13 @@
 window.addEventListener("load", function() { 
-    requestSurvivor(getSurvivorIdFromUrl());
-})
+});
 
 let survivorToBeUpdated = null;
 
-function getSurvivorIdFromUrl() {
-    const parameters = new URL(window.location).searchParams;
-    const userId = parameters.get('userId');
-    return userId;
-}
 
-function requestSurvivor(userId) {
-    
-    const requestUrl = `http://zssn-backend-example.herokuapp.com/api/people/${userId}.json`;
+function requestSurvivor() {
+
+    const survivorId = document.getElementById('person_id').value;
+    const requestUrl = `http://zssn-backend-example.herokuapp.com/api/people/${survivorId}.json`;
     const request = new XMLHttpRequest();
     
     request.open('GET', requestUrl);
@@ -24,9 +19,12 @@ function requestSurvivor(userId) {
         survivorToBeUpdated.name = request.response.name;
         survivorToBeUpdated.age = request.response.age;
         survivorToBeUpdated.gender = request.response.gender;
-        survivorToBeUpdated.latitude = parsePointStringToLatLon(request.response.lonlat).latitude;
-        survivorToBeUpdated.longitude = parsePointStringToLatLon(request.response.lonlat).longitude;
-        console.log(survivorToBeUpdated);        
+        let survivorOldLocationPointString = request.response.lonlat;
+        if (survivorOldLocationPointString !== null) {
+            survivorToBeUpdated.latitude = parsePointStringToLatLon(request.response.lonlat).latitude;
+            survivorToBeUpdated.longitude = parsePointStringToLatLon(request.response.lonlat).longitude;
+        }
+        updateSurvivorLocation(survivorToBeUpdated.id);
         showSurvivor(survivorToBeUpdated);
     }
     request.send();
@@ -36,8 +34,8 @@ function showSurvivor(survivor) {
     document.getElementById('survivorName').innerText = survivor.name;
     document.getElementById('survivorAge').innerText = survivor.age;
     document.getElementById('survivorGender').innerText = survivor.gender;
-    document.getElementById('longitude').innerText = survivor.longitude;
-    document.getElementById('latitude').innerText = survivor.latitude;
+    document.getElementById('survivorLongitude').innerText = survivor.longitude;
+    document.getElementById('survivorLatitude').innerText = survivor.latitude;
 }
 
 function parsePointStringToLatLon(pointString) {
@@ -58,7 +56,7 @@ function updateSurvivorLocation(userId) {
     }
 
     const form = new FormData();
-    form.append('person[name]', 'Mariana');
+    form.append('person[name]', survivorToBeUpdated.name);
     form.append('person[age]', survivorToBeUpdated.age);
     form.append('person[gender]', survivorToBeUpdated.gender);
     form.append('person[lonlat]', parseLatlonToPointString(latlon));

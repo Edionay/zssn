@@ -11,15 +11,15 @@
     <body>
 
         <input type="button" value="New Survivor" onclick="toggleNewSurvivorForm()">
-        
+
         <form method="post" onsubmit="fillItemsInput()" action="http://zssn-backend-example.herokuapp.com/api/people.json" id="new_survivor_form">
             <label for="person[name]" required>Name:</label>
-            <input  type="text" name="person[name]">
+            <input  type="text" name="person[name]" id="person[name]">
             <br><br>
             <label for="person[age]">Age:</label>
-            <input  type="number" name="person[age]">
+            <input  type="number" name="person[age]" id="person[age]">
             <br><br>
-            <label for="gender">Gender:</label>
+            <label>Gender:</label>
             <br>
             <input  type="radio" value="M" id="male" name="person[gender]">
             <label for="male">Male</label>

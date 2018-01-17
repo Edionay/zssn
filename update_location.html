@@ -7,67 +7,39 @@
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="map.js"></script>
     <script src="shared.js"></script>
+    <script src="update_location.js"></script>
 </head>
 <body>
-<form method="post" class="wrapper" onsubmit="fillItemsInput()"
-      action="http://zssn-backend-example.herokuapp.com/api/people.json"
-      id="new_survivor_form">
-    <h1 id="title">New Survivor</h1>
+<div class="wrapper">
+    <h1 id="title">Location Update</h1>
     <div class="left_col">
-        <div class="form_element">
-            <label for="person_name">Name:</label>
-            <input type="text" name="person[name]" id="person_name" placeholder="Enter the full name" required>
-        </div>
 
         <div class="form_element">
-            <label for="person_age">Age:</label>
-            <input type="number" name="person[age]" id="person_age" placeholder="e.g.: 20" required>
+            <label for="person_id">Id:</label>
+            <input type="text" name="person[name]" id="person_id" placeholder="Type your id" required>
+        </div>
+        <div id="submit_button">
+            <input type="button" onclick="requestSurvivor()" value="Update Location">
         </div>
 
-        <div class="form_element">
-            <label id="gender_label">Gender:</label>
-            <input type="radio" value="M" id="male" name="person[gender]" required>
-            <label for="male">Male</label>
-            <input type="radio" value="F" id="female" name="person[gender]" required>
-            <label for="male">Female</label>
+        <div id="survivor_data">
+            <h1 id="survivorName"></h1>
+            <p>Age: <span id="survivorAge"></span></p>
+            <p>Gender: <span id="survivorGender"></span></p>
+            <p>Longitude: <span id="survivorLongitude"></span></p>
+            <p>Latitude: <span id="survivorLatitude"></span></p>
         </div>
 
-        <div class="form_element" id="inventory">
-            <label>Inventory</label>
-            <div class="item">
-                <input type="number" id="water" value="0">
-                <label class="item" for="water">Water</label>
-            </div>
-            <div class="item">
-                <input type="number" id="food" value="0">
-                <label class="item" for="food">Food</label>
-            </div>
-            <div class="item">
-                <input type="number" id="medication" value="0">
-                <label class="item" for="medication">Medication</label>
-            </div>
-            <div class="item">
-                <input type="number" id="ammunition" value="0">
-                <label class="item" for="ammunition">Ammunition</label>
-            </div>
-            <input type="hidden" name="items">
-        </div>
-
-        <input type="hidden" name="person[lonlat]">
     </div>
-    <div class="right_col">
 
+    <div class="right_col">
         <p class="form_element">Location (click on the map to change)</p>
         <div id="map"></div>
         <div class="form_element" id="latlon">
             <p>Longitude: <span id="longitude"></span> Longitude: <span id="latitude"></span></p>
         </div>
     </div>
-    </div>
-    <div id="submit_button">
-        <input type="submit" value="Send">
-    </div>
-</form>
+</div>
 </body>
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJ5vS1Yb4hHCteVkALhYr6yUagQHYBAnM&callback=initMap"></script>
