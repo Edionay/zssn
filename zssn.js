@@ -31,15 +31,6 @@ function showSurvivors(survivorsList) {
     }
 }
 
-function toggleNewSurvivorForm() {
-    const newSurvivorForm = document.getElementById('new_survivor_form');
-    if (newSurvivorForm.style.display === 'block') {
-        newSurvivorForm.style.display = 'none';
-    } else {
-        newSurvivorForm.style.display = 'block';
-    }
-}
-
 function getSurvivorIdFromPath(locationPath) {
     const splittedPath = locationPath.split('/');
     return survivorId = splittedPath[5];

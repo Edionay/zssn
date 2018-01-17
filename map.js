@@ -1,3 +1,5 @@
+var markers = [];
+
 function initMap() {
     var defaultPosition = {lat: -16.7022998021961, lng: -49.26475524902344};
     var map = new google.maps.Map(document.getElementById('map'), {
@@ -18,6 +20,7 @@ function initMap() {
             map: map,
             draggable: true
         });
+        markers.push(marker);
 
         fillLocationFields(pos);
     
@@ -38,9 +41,17 @@ function initMap() {
       
 }
 function placeMarkerAndPanTo(latLng, map) {
+    clearMarker(null);
     var marker = new google.maps.Marker({
       position: latLng,
       map: map
     });
+    markers.push(marker);
     map.panTo(latLng);
+}
+
+function clearMarker(map) {
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(map);
+    }
 }

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="loader.css">
     <script src="map.js"></script>
     <script src="shared.js"></script>
     <script src="update_location.js"></script>
@@ -15,21 +16,20 @@
     <div class="left_col">
 
         <div class="form_element">
-            <label for="person_id">Id:</label>
-            <input type="text" name="person[name]" id="person_id" placeholder="Type your id" required>
-        </div>
-        <div id="submit_button">
-            <input type="button" onclick="requestSurvivor()" value="Update Location">
+            <label for="person_id">User ID:</label>
+            <input type="text" id="person_id" placeholder="e.g.: aaaaaaaa-5555-bbbb-abcd-ffffffffffff" required>
         </div>
 
+
+        <div class="loader" id="loader">Loading...</div>
         <div id="survivor_data">
             <h1 id="survivorName"></h1>
             <p>Age: <span id="survivorAge"></span></p>
             <p>Gender: <span id="survivorGender"></span></p>
+            <h3>Last location</h3>
             <p>Longitude: <span id="survivorLongitude"></span></p>
             <p>Latitude: <span id="survivorLatitude"></span></p>
         </div>
-
     </div>
 
     <div class="right_col">
@@ -39,6 +39,9 @@
             <p>Longitude: <span id="longitude"></span> Longitude: <span id="latitude"></span></p>
         </div>
     </div>
+</div>
+<div id="submit_button">
+    <input type="button" onclick="updateSurvivorLocation()" value="Update Location" id="update_button" disabled>
 </div>
 </body>
 <script async defer
