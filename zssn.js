@@ -40,20 +40,6 @@ function toggleNewSurvivorForm() {
     }
 }
 
-function fillItemsInput() {
-    const form = document.getElementById('new_survivor_form');
-    const water = document.getElementById('water').value;
-    const food = document.getElementById('food').value;
-    const medication = document.getElementById('medication').value;
-    const ammunition = document.getElementById('ammunition').value;
-    const items = "Water:"+water+";Food:"+food+";Medicine:"+medication+";Ammunition:"+ammunition;
-    form.elements.namedItem('items').value = items;
-    const lat = document.getElementById('latitude').innerText;
-    const lon = document.getElementById('longitude').innerText;
-    form.elements.namedItem('person[lonlat]').value = parseLatlonToPointString({lat, lon});
-    return true;
-}
-
 function getSurvivorIdFromPath(locationPath) {
     const splittedPath = locationPath.split('/');
     return survivorId = splittedPath[5];
