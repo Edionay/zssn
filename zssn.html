@@ -9,49 +9,6 @@
         <script src="shared.js"></script>
     </head>
     <body>
-
-        <input type="button" value="New Survivor" onclick="toggleNewSurvivorForm()">
-
-        <form method="post" onsubmit="fillItemsInput()" action="http://zssn-backend-example.herokuapp.com/api/people.json" id="new_survivor_form">
-            <label for="person[name]" required>Name:</label>
-            <input  type="text" name="person[name]" id="person[name]">
-            <br><br>
-            <label for="person[age]">Age:</label>
-            <input  type="number" name="person[age]" id="person[age]">
-            <br><br>
-            <label>Gender:</label>
-            <br>
-            <input  type="radio" value="M" id="male" name="person[gender]">
-            <label for="male">Male</label>
-            <input  type="radio"  value="F" id="female" name="person[gender]">
-            <label for="male">Female</label>
-            <br><br>
-            <label>Inventory</label>
-            <br>
-            <label for="water">Water:</label>
-            <input type="number" id="water">
-            <br>
-            <label for="food">Food:</label>
-            <input type="number" id="food">
-            <br>
-            <label for="medication">Medication:</label>
-            <input type="number" id="medication">
-            <br>
-            <label for="ammunition">Ammunition:</label>
-            <input type="number" id="ammunition">
-            <input type="hidden" name="items">
-            <label>Location</label>
-            <br>
-            <p>Longitude: <span id="longitude"></span></p>
-            <p>Latitude: <span id="latitude"></span></p>
-            <input type="hidden" name="person[lonlat]">
-
-        <input type="submit" value="Send">
-        </form>
-
-        <div id="map"></div>
-
-        
         <h1>Active Survivors</h1>
         <table>
             <thead>

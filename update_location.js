@@ -2,49 +2,7 @@ window.addEventListener("load", function () {
     document.getElementById('person_id').addEventListener('input', requestSurvivor);
 });
 
-let survivorToBeUpdated = null;
-
-function requestSurvivor() {
-
-    const survivorId = document.getElementById('person_id').value;
-    if (survivorId.length === 36) {
-        showLoader();
-        const requestUrl = `http://zssn-backend-example.herokuapp.com/api/people/${survivorId}.json`;
-        const request = new XMLHttpRequest();
-
-        request.open('GET', requestUrl);
-        request.responseType = 'json';
-        request.onload = () => {
-            if (request.status === 200) {
-                survivorToBeUpdated = {};
-                survivorToBeUpdated.id = request.response.id;
-                survivorToBeUpdated.name = request.response.name;
-                survivorToBeUpdated.age = request.response.age;
-                survivorToBeUpdated.gender = request.response.gender;
-                let survivorOldLocationPointString = request.response.lonlat;
-                console.log(survivorOldLocationPointString);
-                if (survivorOldLocationPointString.value !== null) {
-                    survivorToBeUpdated.latitude = parsePointStringToLatLon(request.response.lonlat).latitude;
-                    survivorToBeUpdated.longitude = parsePointStringToLatLon(request.response.lonlat).longitude;
-                }
-                showSurvivor(survivorToBeUpdated);
-                hideLoader();
-                showSurvivorData();
-                enableUpdateButton();
-            } else {
-                survivorToBeUpdated = null;
-                disableUpdateButton();
-                hideLoader()
-            }
-        };
-        request.send();
-    } else {
-        hideLoader();
-        hideSurvivorData();
-        survivorToBeUpdated = null;
-        disableUpdateButton();
-    }
-}
+let currentSurvivor = null;
 
 function disableUpdateButton() {
     document.getElementById('update_button').disabled = true;
@@ -93,22 +51,22 @@ function parsePointStringToLatLon(pointString) {
 
 function updateSurvivorLocation() {
 
-    survivorToBeUpdated.latitude = document.getElementById('latitude').innerText;
-    survivorToBeUpdated.longitude = document.getElementById('longitude').innerText;
+    currentSurvivor.latitude = document.getElementById('latitude').innerText;
+    currentSurvivor.longitude = document.getElementById('longitude').innerText;
 
     const latlon = {
-        lat: survivorToBeUpdated.latitude,
-        lon: survivorToBeUpdated.longitude
+        lat: currentSurvivor.latitude,
+        lon: currentSurvivor.longitude
     }
 
     const form = new FormData();
-    form.append('person[name]', survivorToBeUpdated.name);
-    form.append('person[age]', survivorToBeUpdated.age);
-    form.append('person[gender]', survivorToBeUpdated.gender);
+    form.append('person[name]', currentSurvivor.name);
+    form.append('person[age]', currentSurvivor.age);
+    form.append('person[gender]', currentSurvivor.gender);
     form.append('person[lonlat]', parseLatlonToPointString(latlon));
 
     const request = new XMLHttpRequest();
-    request.open('PATCH', `http://zssn-backend-example.herokuapp.com/api/people/${survivorToBeUpdated.id}.json`);
+    request.open('PATCH', `http://zssn-backend-example.herokuapp.com/api/people/${currentSurvivor.id}.json`);
     request.onload = () => {
         if (request.status === 200) {
             console.log('SUCESS!');

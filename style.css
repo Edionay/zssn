@@ -127,3 +127,8 @@ input[type='text'] {
 #update_button:disabled {
     background-color: gray;
 }
+
+#infected_name_label {
+    display: inline-block;
+    width: 125px;
+}
