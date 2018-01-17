@@ -13,6 +13,8 @@ function parseLatlonToPointString(latlon) {
 
 function onFormSubmitted(event) {
 
+    showLoader();
+
     const myForm = document.getElementById('new_survivor_form');
     const form = new FormData();
 
@@ -36,11 +38,37 @@ function onFormSubmitted(event) {
     request.open('POST', 'http://zssn-backend-example.herokuapp.com/api/people.json');
     request.responseType = 'json';
     request.onload = () => {
-        console.log(request.status);
+        hideLoader();
+        if (request.status === 201) {
+            displayInfoMessage('SUCCESS', '');
+            myForm.reset();
+        } else if (request.status === 422) {
+            displayInfoMessage('ERROR', "Survivor name has already been taken");
+        } else {
+            displayInfoMessage('ERROR', "Unknown")
+        }
     };
     request.send(form);
     event.preventDefault();
+}
 
+function displayInfoMessage(type, details) {
+    const messageField = document.getElementById('info_message');
+    messageField.style.display = 'block';
+    let messageTypeField = document.getElementById('info_type');
+    messageTypeField.innerText = type;
+    let messageDetailsField = document.getElementById('info_details');
+    messageDetailsField.innerText = details;
+}
+
+function hideSubmitButton() {
+    const submitButton = document.getElementById('submit_button');
+    submitButton.style.display = 'none';
+}
+
+function showSubmitButton() {
+    const submitButton = document.getElementById('submit_button');
+    submitButton.style.display = 'block';
 }
 
 function requestSurvivor() {
@@ -137,4 +165,15 @@ function flagSurvivor(event) {
         form.append('infected', event.target.id);
         request.send(form);
     }
+}
+
+
+function showLoader() {
+    const survivorInfo = document.getElementById('loader');
+    survivorInfo.style.display = 'block';
+}
+
+function hideLoader() {
+    const survivorInfo = document.getElementById('loader');
+    survivorInfo.style.display = 'none';
 }

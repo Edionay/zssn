@@ -23,15 +23,6 @@ function hideSurvivorData() {
     survivorInfo.style.display = 'none';
 }
 
-function showLoader() {
-    const survivorInfo = document.getElementById('loader');
-    survivorInfo.style.display = 'block';
-}
-
-function hideLoader() {
-    const survivorInfo = document.getElementById('loader');
-    survivorInfo.style.display = 'none';
-}
 
 
 function showSurvivor(survivor) {

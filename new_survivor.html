@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="loader.css">
     <script src="map.js"></script>
     <script src="shared.js"></script>
 </head>
 <body>
-<form class="wrapper" id="new_survivor_form" onsubmit="onFormSubmitted(event)">
+<form method="post" class="wrapper" id="new_survivor_form" onsubmit="onFormSubmitted(event)">
     <h1 id="title">New Survivor</h1>
     <div class="left_col">
         <div class="form_element">
@@ -19,7 +20,8 @@
 
         <div class="form_element">
             <label for="person_age">Age:</label>
-            <input type="number" name="person[age]" id="person_age" placeholder="e.g.: 20" required>
+            <input type="number" min="0" max="9999" maxlength="3" name="person[age]" id="person_age"
+                   placeholder="e.g.: 20" required>
         </div>
 
         <div class="form_element">
@@ -33,19 +35,19 @@
         <div class="form_element" id="inventory">
             <label>Inventory</label>
             <div class="item">
-                <input type="number" id="water" value="0" required>
+                <input type="number" min="0" max="9999" maxlength="3" id="water" value="0" required>
                 <label class="item" for="water">Water</label>
             </div>
             <div class="item">
-                <input type="number" id="food" value="0" required>
+                <input type="number" min="0" max="9999" maxlength="3" id="food" value="0" required>
                 <label class="item" for="food">Food</label>
             </div>
             <div class="item">
-                <input type="number" id="medication" value="0" required>
+                <input type="number" min="0" max="9999" maxlength="3" id="medication" value="0" required>
                 <label class="item" for="medication">Medication</label>
             </div>
             <div class="item">
-                <input type="number" id="ammunition" value="0" required>
+                <input type="number" min="0" max="9999" maxlength="3" id="ammunition" value="0" required>
                 <label class="item" for="ammunition">Ammunition</label>
             </div>
             <input type="hidden" name="items">
@@ -55,15 +57,20 @@
     </div>
     <div class="right_col">
 
-        <p class="form_element">Location (click on the map to change)</p>
+        <p class="form_element" id="location_title">Location (click on the map to change)</p>
         <div id="map"></div>
-        <div class="form_element" id="latlon">
+        <div id="latlon">
             <p>Longitude: <span id="longitude"></span> Longitude: <span id="latitude"></span></p>
+        </div>
+        <div id="submit_button">
+            <input type="submit" value="Send">
         </div>
     </div>
     </div>
-    <div id="submit_button">
-        <input type="submit" value="Send">
+    <div class="loader" id="loader"></div>
+    <div id="info_message">
+        <p id="info_type"></p>
+        <p id="info_details"></p>
     </div>
 </form>
 </body>
