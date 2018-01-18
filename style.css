@@ -101,6 +101,7 @@ input[type='number'] {
 }
 
 #latlon {
+    display: none;
     font-size: small;
     text-align: center;
 }
@@ -130,7 +131,7 @@ input[type='text'] {
 }
 
 #update_button:disabled {
-    background-color: gray;
+    background-color: #D3D3D3;
 }
 
 #infected_name_label {
@@ -157,4 +158,16 @@ input[type='text'] {
 
 #location_title {
     margin-bottom: 10px;
+}
+
+#warning_message_to_valid_id_input {
+    text-align: center;
+    color: orange;
+    font-size: large;
+}
+
+#lonlat_pick_warning {
+    color: orange;
+    font-size: small;
+    text-align: center;
 }

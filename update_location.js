@@ -42,6 +42,8 @@ function parsePointStringToLatLon(pointString) {
 
 function updateSurvivorLocation() {
 
+    hideSurvivorData();
+    showLoader();
     currentSurvivor.latitude = document.getElementById('latitude').innerText;
     currentSurvivor.longitude = document.getElementById('longitude').innerText;
 
@@ -60,11 +62,73 @@ function updateSurvivorLocation() {
     request.open('PATCH', `http://zssn-backend-example.herokuapp.com/api/people/${currentSurvivor.id}.json`);
     request.onload = () => {
         if (request.status === 200) {
-            console.log('SUCESS!');
+            displayInfoMessage('SUCCESS!', '');
+            hideLoader();
+            showSurvivor(currentSurvivor);
+            showSurvivorData();
+
         }
         else {
-            console.log('ERRO!');
+            displayInfoMessage('ERROR!', 'Unknown');
         }
     };
     request.send(form);
+}
+
+function displayWarningMessage() {
+    const warningMessage = document.getElementById('warning_message_to_valid_id_input');
+    warningMessage.style.display = 'block';
+}
+
+function hideWarningMessage() {
+    const warningMessage = document.getElementById('warning_message_to_valid_id_input');
+    warningMessage.style.display = 'none';
+}
+
+function requestSurvivor() {
+
+    hideInfoMessage();
+    const survivorId = document.getElementById('person_id').value;
+    if (survivorId.length === 36) {
+        showLoader();
+        const requestUrl = `http://zssn-backend-example.herokuapp.com/api/people/${survivorId}.json`;
+        const request = new XMLHttpRequest();
+
+        request.open('GET', requestUrl);
+        request.responseType = 'json';
+        request.onload = () => {
+            if (request.status === 200) {
+                hideWarningMessage();
+                currentSurvivor = {};
+                currentSurvivor.id = request.response.id;
+                currentSurvivor.name = request.response.name;
+                currentSurvivor.age = request.response.age;
+                currentSurvivor.gender = request.response.gender;
+                let survivorOldLocationPointString = request.response.lonlat;
+                if (survivorOldLocationPointString !== null) {
+                    currentSurvivor.latitude = parsePointStringToLatLon(request.response.lonlat).latitude;
+                    currentSurvivor.longitude = parsePointStringToLatLon(request.response.lonlat).longitude;
+                } else {
+                    currentSurvivor.latitude = 'Unknown';
+                    currentSurvivor.longitude = 'Unknown';
+                }
+                showSurvivor(currentSurvivor);
+                hideLoader();
+                showSurvivorData();
+                enableUpdateButton();
+            } else {
+                displayWarningMessage();
+                currentSurvivor = null;
+                disableUpdateButton();
+                hideLoader()
+            }
+        };
+        request.send();
+    } else {
+        displayWarningMessage();
+        hideLoader();
+        hideSurvivorData();
+        currentSurvivor = null;
+        disableUpdateButton();
+    }
 }

@@ -9,43 +9,38 @@ function initMap() {
 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
-        var pos = {
+            var pos = {
             lat: position.coords.latitude,
             lng: position.coords.longitude
         };
-
+            hideLonlatWarning();
         map.setCenter(pos);
-        var marker = new google.maps.Marker({
+
+            var marker = new google.maps.Marker({
             position: pos,
             map: map,
             draggable: true
         });
-        markers.push(marker);
+            showPickedLonlat();
+            markers.push(marker);
 
         fillLocationFields(pos);
-    
-      }, function() {
-        handleLocationError(true, infoWindow, map.getCenter());
       });
-    } else {
-      // Browser doesn't support Geolocation
-      handleLocationError(false, infoWindow, map.getCenter());
     }
 
     map.addListener('click', event => {
-        placeMarkerAndPanTo(event.latLng, map);
+        placeMarker(event.latLng, map);
         fillLocationFields({lat: event.latLng.lat(), lng: event.latLng.lng()});
-        console.log(event.latLng.lat());
-        console.log(event.latLng.lng());
       });
-      
 }
-function placeMarkerAndPanTo(latLng, map) {
+function placeMarker(latLng, map) {
     clearMarker(null);
     var marker = new google.maps.Marker({
       position: latLng,
       map: map
     });
+    hideLonlatWarning();
+    showPickedLonlat();
     markers.push(marker);
     // map.panTo(latLng);
 }

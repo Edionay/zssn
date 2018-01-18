@@ -20,8 +20,10 @@
             <input type="text" id="person_id" placeholder="e.g.: aaaaaaaa-5555-bbbb-abcd-ffffffffffff" required>
         </div>
 
+        <p id="warning_message_to_valid_id_input">Please, insert a valid survivor ID</p>
 
         <div class="loader" id="loader">Loading...</div>
+
         <div id="survivor_data">
             <h1 id="survivorName"></h1>
             <p>Age: <span id="survivorAge"></span></p>
@@ -30,18 +32,25 @@
             <p>Longitude: <span id="survivorLongitude"></span></p>
             <p>Latitude: <span id="survivorLatitude"></span></p>
         </div>
+
+        <div id="info_message">
+            <p id="info_type"></p>
+            <p id="info_details"></p>
+        </div>
+
     </div>
 
     <div class="right_col">
-        <p class="form_element">Location (click on the map to change)</p>
+        <p class="form_element" id="location_title">Location (click on the map to change)</p>
         <div id="map"></div>
-        <div class="form_element" id="latlon">
+        <div id="latlon">
             <p>Longitude: <span id="longitude"></span> Longitude: <span id="latitude"></span></p>
         </div>
+        <div id="submit_button">
+            <input type="button" onclick="updateSurvivorLocation()" value="Update Location" id="update_button" disabled>
+        </div>
     </div>
-</div>
-<div id="submit_button">
-    <input type="button" onclick="updateSurvivorLocation()" value="Update Location" id="update_button" disabled>
+
 </div>
 </body>
 <script async defer
