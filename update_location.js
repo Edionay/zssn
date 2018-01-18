@@ -1,5 +1,7 @@
 window.addEventListener("load", function () {
     document.getElementById('person_id').addEventListener('input', requestSurvivor);
+    document.getElementById('person_id').value = '';
+    disableUpdateButton();
 });
 
 let currentSurvivor = null;
@@ -42,37 +44,43 @@ function parsePointStringToLatLon(pointString) {
 
 function updateSurvivorLocation() {
 
-    hideSurvivorData();
-    showLoader();
-    currentSurvivor.latitude = document.getElementById('latitude').innerText;
-    currentSurvivor.longitude = document.getElementById('longitude').innerText;
+    if (validadeLocationField()) {
 
-    const latlon = {
-        lat: currentSurvivor.latitude,
-        lon: currentSurvivor.longitude
+        hideSurvivorData();
+        showLoader();
+        currentSurvivor.latitude = document.getElementById('latitude').innerText;
+        currentSurvivor.longitude = document.getElementById('longitude').innerText;
+
+        const latlon = {
+            lat: currentSurvivor.latitude,
+            lon: currentSurvivor.longitude
+        }
+
+        const form = new FormData();
+        form.append('person[name]', currentSurvivor.name);
+        form.append('person[age]', currentSurvivor.age);
+        form.append('person[gender]', currentSurvivor.gender);
+        form.append('person[lonlat]', parseLatlonToPointString(latlon));
+
+        const request = new XMLHttpRequest();
+        request.open('PATCH', `http://zssn-backend-example.herokuapp.com/api/people/${currentSurvivor.id}.json`);
+        request.onload = () => {
+            if (request.status === 200) {
+                displayInfoMessage('SUCCESS!', '');
+                hideLoader();
+                showSurvivor(currentSurvivor);
+                showSurvivorData();
+
+            }
+            else {
+                displayInfoMessage('ERROR!', 'Unknown');
+            }
+        };
+        request.send(form);
+    } else  {
+        disableUpdateButton()
     }
 
-    const form = new FormData();
-    form.append('person[name]', currentSurvivor.name);
-    form.append('person[age]', currentSurvivor.age);
-    form.append('person[gender]', currentSurvivor.gender);
-    form.append('person[lonlat]', parseLatlonToPointString(latlon));
-
-    const request = new XMLHttpRequest();
-    request.open('PATCH', `http://zssn-backend-example.herokuapp.com/api/people/${currentSurvivor.id}.json`);
-    request.onload = () => {
-        if (request.status === 200) {
-            displayInfoMessage('SUCCESS!', '');
-            hideLoader();
-            showSurvivor(currentSurvivor);
-            showSurvivorData();
-
-        }
-        else {
-            displayInfoMessage('ERROR!', 'Unknown');
-        }
-    };
-    request.send(form);
 }
 
 function displayWarningMessage() {
@@ -115,7 +123,12 @@ function requestSurvivor() {
                 showSurvivor(currentSurvivor);
                 hideLoader();
                 showSurvivorData();
-                enableUpdateButton();
+
+                if (validadeLocationField()) {
+                    enableUpdateButton();
+                } else {
+                    disableUpdateButton();
+                }
             } else {
                 displayWarningMessage();
                 currentSurvivor = null;

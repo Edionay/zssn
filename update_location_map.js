@@ -25,6 +25,11 @@ function initMap() {
             markers.push(marker);
 
         fillLocationFields(pos);
+        if (currentSurvivor) {
+            enableUpdateButton();
+        } else {
+            disableUpdateButton();
+        }
       });
     }
 
@@ -35,6 +40,11 @@ function initMap() {
                 lat: event.latLng.lat(),
                 lng: event.latLng.lng()
             });
+        if (currentSurvivor) {
+            enableUpdateButton();
+        } else {
+            disableUpdateButton();
+        }
       });
 }
 function placeMarker(latLng, map) {

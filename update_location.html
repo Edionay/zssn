@@ -6,7 +6,7 @@
     <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" type="text/css" href="loader.css">
-    <script src="map.js"></script>
+    <script src="update_location_map.js"></script>
     <script src="shared.js"></script>
     <script src="update_location.js"></script>
 </head>
@@ -17,7 +17,7 @@
 
         <div class="form_element">
             <label for="person_id">User ID:</label>
-            <input type="text" id="person_id" placeholder="e.g.: aaaaaaaa-5555-bbbb-abcd-ffffffffffff" required>
+            <input type="text" id="person_id" placeholder="e.g.: aaaaaaaa-5555-bbbb-abcd-ffffffffffff">
         </div>
 
         <p id="warning_message_to_valid_id_input">Please, insert a valid survivor ID</p>
@@ -43,6 +43,11 @@
     <div class="right_col">
         <p class="form_element" id="location_title">Location (click on the map to change)</p>
         <div id="map"></div>
+
+        <div id="lonlat_pick_warning">
+            <p>Please, pick a valid location</p>
+        </div>
+
         <div id="latlon">
             <p>Longitude: <span id="longitude"></span> Longitude: <span id="latitude"></span></p>
         </div>
