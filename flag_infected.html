@@ -7,24 +7,38 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" type="text/css" href="loader.css">
-    <script src="zssn.js"></script>
+    <script src="flag_infected.js"></script>
     <script src="shared.js"></script>
-    <script src="update_location.js"></script>
 </head>
 <body>
+
 <div class="wrapper">
     <h1 id="title">Flag Survivor</h1>
     <div class="left_col">
 
         <div class="form_element">
-            <label for="person_id">Your ID:</label>
-            <input type="text" id="person_id" placeholder="e.g.: aaaaaaaa-5555-bbbb-abcd-ffffffffffff">
+            <label for="user_id">Your ID:</label>
+            <input type="text" id="user_id" placeholder="e.g.: aaaaaaaa-5555-bbbb-abcd-ffffffffffff">
+            <p id="warning_message_to_valid_id">Please, insert a valid ID</p>
         </div>
 
-        <div class="form_element">
-            <label id="infected_name_label">Infected's name:</label>
-            <input type="text" id="infected_name">
+        <div id="info_message">
+            <p id="info_type"></p>
+            <p id="info_details"></p>
         </div>
+
+    </div>
+
+    <div class="right_col">
+        <div>
+
+            <p id="warning_message_to_flag">Click on <i class="material-icons">flag</i> to report</p>
+
+            <div class="flag_input">
+                <input type="text" id="infected_name" placeholder="Filter by name">
+            </div>
+        </div>
+
         <table>
             <thead>
             <th>Name</th>
@@ -32,26 +46,18 @@
             <tbody id="survivors_list">
             </tbody>
         </table>
-
-
+    </div>
     </div>
 
-    <div class="right_col">
-
-        <div class="loader" id="loader">Loading...</div>
-        <div id="survivor_data">
-            <h1 id="survivorName"></h1>
-            <p>Age: <span id="survivorAge"></span></p>
-            <p>Gender: <span id="survivorGender"></span></p>
-            <h3>Last location</h3>
-            <p>Longitude: <span id="survivorLongitude"></span></p>
-            <p>Latitude: <span id="survivorLatitude"></span></p>
-        </div>
-
-    </div>
 </div>
-<div id="submit_button">
-    <input type="button" onclick="updateSurvivorLocation()" value="Update Location" id="update_button" disabled>
-</div>
+
+
+
+
+
+
+    <div id="col">
+
+
 </body>
 </html>

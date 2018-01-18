@@ -120,57 +120,6 @@ function displayInfoMessage(type, details) {
 //     }
 // }
 
-function showSurvivors(survivorsList) {
-    const survivorsTable = document.getElementById('survivors_list');
-    for (const survivor of survivorsList) {
-        const newRow = survivorsTable.insertRow();
-        let iconCell = newRow.insertCell(0);
-        let nameCell = newRow.insertCell(1);
-
-        nameCell.innerText = survivor.name;
-        const iconLink = document.createElement('a');
-        const iconToLink = document.createElement('i');
-        iconToLink.className = 'material-icons';
-        iconToLink.innerText = 'flag';
-        iconLink.appendChild(iconToLink);
-        iconLink.addEventListener('click', flagSurvivor);
-        iconToLink.id = getSurvivorIdFromPath(survivor.location);
-        iconCell.appendChild(iconLink);
-
-    }
-}
-
-function survivorsFilterByName() {
-
-    const survivorsTable = document.getElementById('survivors_list');
-    const tableRows = survivorsTable.getElementsByTagName('tr');
-    const term = document.getElementById('infected_name').value.toLocaleLowerCase();
-
-    for (survivor of tableRows) {
-        if (survivor.innerText.toLocaleLowerCase().includes(term)){
-            survivor.style.display = '';
-        } else {
-            survivor.style.display = 'none';
-        }
-    }
-}
-
-function flagSurvivor(event) {
-    console.log(event.target.id);
-    if (currentSurvivor !== null) {
-        const request = new XMLHttpRequest();
-        const requestUrl = `http://zssn-backend-example.herokuapp.com/api/people/${currentSurvivor.id}/report_infection.json`;
-        request.open('POST', requestUrl);
-        request.responseType = 'json';
-        request.onload = () => {
-            console.log(request.status);
-        };
-        const form = new FormData();
-        form.append('infected', event.target.id);
-        request.send(form);
-    }
-}
-
 function showLoader() {
     const loader = document.getElementById('loader');
     loader.style.display = 'block';

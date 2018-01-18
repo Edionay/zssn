@@ -72,6 +72,26 @@ body {
     padding-left: 10px;
 }
 
+#user_id {
+    width: 410px;
+    padding-left: 10px;
+}
+
+.name_cell {
+    width: 400px;
+    padding-left: 15px;
+}
+
+#user_input {
+}
+
+#infected_name {
+    width: 345px;
+    text-align: center;
+
+}
+
+
 #person_age {
     text-align: right;
     height: 30px;
@@ -81,6 +101,11 @@ body {
 
 .form_element {
     margin: 20px 20px 20px 0px;
+}
+
+.flag_input {
+    margin: 20px 20px 20px 0px;
+    text-align: center;
 }
 
 .wrapper {
@@ -154,6 +179,7 @@ input[type='text'] {
 
 #info_details {
     margin: 0;
+    color: orange;
 }
 
 #location_title {
@@ -166,8 +192,54 @@ input[type='text'] {
     font-size: large;
 }
 
+#warning_message_to_valid_id {
+    text-align: center;
+    color: orange;
+    font-size: large;
+    margin-bottom: 2px;
+    margin-top: 10px;
+}
+
+#warning_message_to_flag {
+    text-align: center;
+    color: orange;
+    font-size: large;
+    margin-bottom: 2px;
+    margin-top: 10px;
+}
+
 #lonlat_pick_warning {
     color: orange;
     font-size: small;
     text-align: center;
+}
+
+#col {
+    margin: 0 auto;
+    display: block;
+    width: 1000px;
+}
+
+table {
+    margin: 0 auto;
+    border-collapse: collapse;
+    border: 1px solid orange;
+}
+
+
+tr {
+    height: 50px;
+    border-bottom: 1px solid orange;
+}
+
+.icon_cell>a:visited {
+    color: black;
+}
+
+.icon_cell>a:hover {
+    color: orange;
+}
+
+th {
+    width: 428px;
 }
