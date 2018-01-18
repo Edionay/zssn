@@ -1,6 +1,6 @@
-.loader,
-.loader:before,
-.loader:after {
+.loading_icon,
+.loading_icon:before,
+.loading_icon:after {
   width: 1.5em;
   height: 1.5em;
   -webkit-animation-fill-mode: both;
@@ -8,7 +8,7 @@
   -webkit-animation: load7 1.8s infinite ease-in-out;
   animation: load7 1.8s infinite ease-in-out;
 }
-.loader {
+.loading_icon {
   color: #ff8000;
   font-size: 10px;
   margin: 80px auto;
@@ -20,18 +20,18 @@
   -webkit-animation-delay: -0.16s;
   animation-delay: -0.16s;
 }
-.loader:before,
-.loader:after {
+.loading_icon:before,
+.loading_icon:after {
   content: '';
   position: absolute;
   top: 0;
 }
-.loader:before {
+.loading_icon:before {
   left: -3.5em;
   -webkit-animation-delay: -0.32s;
   animation-delay: -0.32s;
 }
-.loader:after {
+.loading_icon:after {
   left: 3.5em;
 }
 @-webkit-keyframes load7 {
@@ -55,6 +55,6 @@
   }
 }
 
-#loader {
+#loading_icon {
   display: none;
 }

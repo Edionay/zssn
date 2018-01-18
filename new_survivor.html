@@ -12,7 +12,6 @@
 <body>
 
 <nav>
-    <a href="home.html">Home</a>
     <a class="active" href="new_survivor.html">New Survivor</a>
     <a href="update_location.html">Location Update</a>
     <a href="flag_infected.html">Report Infected</a>
@@ -38,7 +37,7 @@
             <input type="radio" value="M" id="male" name="person[gender]" required>
             <label for="male">Male</label>
             <input type="radio" value="F" id="female" name="person[gender]" required>
-            <label for="male">Female</label>
+            <label for="female">Female</label>
         </div>
 
         <div class="form_element" id="inventory">
@@ -52,7 +51,7 @@
                 <label class="item" for="food">Food</label>
             </div>
             <div class="item">
-                <input type="number" min="0"id="medication" value="0" required>
+                <input type="number" min="0" id="medication" value="0" required>
                 <label class="item" for="medication">Medication</label>
             </div>
             <div class="item">
@@ -80,8 +79,8 @@
             <input type="submit" value="Send">
         </div>
     </div>
-    </div>
-    <div class="loader" id="loader"></div>
+
+    <div class="loading_icon" id="loading_icon"></div>
 
     <div id="info_message">
         <p id="info_type"></p>

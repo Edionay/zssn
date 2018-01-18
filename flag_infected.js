@@ -7,41 +7,34 @@ window.addEventListener("load", function () {
 });
 
 let survivorsList = null;
-let uninfectedSurvivorsList = null;
 let currentUser = null;
 
 function requestSurvivors() {
     const requestUrl = 'http://zssn-backend-example.herokuapp.com/api/people.json';
-    const request = new XMLHttpRequest;
+    const request = new XMLHttpRequest();
 
     request.open('GET', requestUrl);
     request.responseType = 'json';
     request.onload = () => {
         survivorsList = request.response;
-        setUninfectedList(survivorsList);
-        showSurvivors(uninfectedSurvivorsList);
+        const uninfected = filterUninfectedSurvivors(survivorsList);
+        showSurvivors(uninfected);
     };
     request.send();
 }
 
-function setUninfectedList(survivorsList) {
-    uninfectedSurvivorsList = [];
-
-    for (let surivor of survivorsList) {
-        if (!surivor['infected?']) {
-            uninfectedSurvivorsList.push(surivor);
-        }
-    }
+function filterUninfectedSurvivors(survivorsList) {
+    return survivorsList.filter(survivor => !survivor['infected?'])
 }
 
 function getSurvivorIdFromPath(locationPath) {
-    const splittedPath = locationPath.split('/');
-    return survivorId = splittedPath[5];
+    const splitPath = locationPath.split('/');
+    return splitPath[5];
 }
 
 function flagSurvivor(event) {
 
-    if (currentUser) {
+    if (currentUser !== null) {
         const request = new XMLHttpRequest();
         const requestUrl = `http://zssn-backend-example.herokuapp.com/api/people/${currentUser.id}/report_infection.json`;
         request.open('POST', requestUrl);
@@ -91,7 +84,7 @@ function survivorsFilterByName() {
     const tableRows = survivorsTable.getElementsByTagName('tr');
     const term = document.getElementById('infected_name').value.toLocaleLowerCase();
 
-    for (survivor of tableRows) {
+    for (let survivor of tableRows) {
         if (survivor.innerText.toLocaleLowerCase().includes(term)) {
             survivor.style.display = '';
         } else {
@@ -116,7 +109,7 @@ function requestCurrentUser() {
                 currentUser = {
                     id: request.response.id,
                     name: request.response.name
-                }
+                };
                 document.getElementById('warning_message_to_valid_id').innerText = `Welcome, ${currentUser.name}!`
 
             } else {

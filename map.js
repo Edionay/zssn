@@ -46,7 +46,6 @@ function placeMarker(latLng, map) {
     hideLonlatWarning();
     showPickedLonlat();
     markers.push(marker);
-    // map.panTo(latLng);
 }
 
 function clearMarker(map) {

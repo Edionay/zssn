@@ -15,12 +15,12 @@ function enableUpdateButton() {
 }
 
 
-function showSurvivorData() {
+function makeSurvivorInfoVisible() {
     const survivorInfo = document.getElementById('survivor_data');
     survivorInfo.style.display = 'block';
 }
 
-function hideSurvivorData() {
+function makeSurvivorInfoInvisible() {
     const survivorInfo = document.getElementById('survivor_data');
     survivorInfo.style.display = 'none';
 }
@@ -36,41 +36,40 @@ function showSurvivor(survivor) {
 }
 
 function parsePointStringToLatLon(pointString) {
-    const splittedPoint = pointString.split(' ');
-    const longitude = splittedPoint[1].slice(1);
-    const latitude = splittedPoint[2].slice(0, splittedPoint[2].length - 1);
+    const pointStringComponents = pointString.split(' ');
+    const longitude = pointStringComponents[1].slice(1);
+    const latitude = pointStringComponents[2].slice(0, pointStringComponents[2].length - 1);
     return {latitude, longitude};
 }
 
 function updateSurvivorLocation() {
 
-    if (validadeLocationField()) {
+    if (validateLocationFieldNotEmpty()) {
 
-        hideSurvivorData();
-        showLoader();
+        makeSurvivorInfoInvisible();
+        showLoadingIcon();
         currentSurvivor.latitude = document.getElementById('latitude').innerText;
         currentSurvivor.longitude = document.getElementById('longitude').innerText;
 
         const latlon = {
             lat: currentSurvivor.latitude,
             lon: currentSurvivor.longitude
-        }
+        };
 
         const form = new FormData();
         form.append('person[name]', currentSurvivor.name);
         form.append('person[age]', currentSurvivor.age);
         form.append('person[gender]', currentSurvivor.gender);
-        form.append('person[lonlat]', parseLatlonToPointString(latlon));
+        form.append('person[lonlat]', convertLatlonToPointString(latlon));
 
         const request = new XMLHttpRequest();
         request.open('PATCH', `http://zssn-backend-example.herokuapp.com/api/people/${currentSurvivor.id}.json`);
         request.onload = () => {
             if (request.status === 200) {
                 displayInfoMessage('SUCCESS!', '');
-                hideLoader();
+                hideLoadingIcon();
                 showSurvivor(currentSurvivor);
-                showSurvivorData();
-
+                makeSurvivorInfoVisible();
             }
             else {
                 displayInfoMessage('ERROR!', 'Unknown');
@@ -98,7 +97,7 @@ function requestSurvivor() {
     hideInfoMessage();
     const survivorId = document.getElementById('person_id').value;
     if (survivorId.length === 36) {
-        showLoader();
+        showLoadingIcon();
         const requestUrl = `http://zssn-backend-example.herokuapp.com/api/people/${survivorId}.json`;
         const request = new XMLHttpRequest();
 
@@ -121,10 +120,10 @@ function requestSurvivor() {
                     currentSurvivor.longitude = 'Unknown';
                 }
                 showSurvivor(currentSurvivor);
-                hideLoader();
-                showSurvivorData();
+                hideLoadingIcon();
+                makeSurvivorInfoVisible();
 
-                if (validadeLocationField()) {
+                if (validateLocationFieldNotEmpty()) {
                     enableUpdateButton();
                 } else {
                     disableUpdateButton();
@@ -133,14 +132,14 @@ function requestSurvivor() {
                 displayWarningMessage();
                 currentSurvivor = null;
                 disableUpdateButton();
-                hideLoader()
+                hideLoadingIcon()
             }
         };
         request.send();
     } else {
         displayWarningMessage();
-        hideLoader();
-        hideSurvivorData();
+        hideLoadingIcon();
+        makeSurvivorInfoInvisible();
         currentSurvivor = null;
         disableUpdateButton();
     }

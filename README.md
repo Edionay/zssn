@@ -1,4 +1,5 @@
 # ZSSN - Zombie Survival Social Network
 
 ## Starting
-To start the applications open the `home.html` file on a modern browser.
+To start the application, open the `new_survivor.html` file on a modern browser.
+

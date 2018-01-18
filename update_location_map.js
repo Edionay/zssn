@@ -40,7 +40,7 @@ function initMap() {
                 lat: event.latLng.lat(),
                 lng: event.latLng.lng()
             });
-        if (currentSurvivor) {
+        if (currentSurvivor !== null) {
             enableUpdateButton();
         } else {
             disableUpdateButton();
