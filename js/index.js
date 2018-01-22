@@ -37,10 +37,6 @@ function showReportInfo() {
     document.getElementById('infection_report').style.display = 'block';
 }
 
-function showInventoryInfo() {
-    document.getElementById('inventory_report').style.display = 'block';
-}
-
 function requestSurvivors() {
     showLoadingIcon();
     const requestUrl = 'http://zssn-backend-example.herokuapp.com/api/people.json';
@@ -86,7 +82,7 @@ function fillSurvivorsIdList(survivorsList) {
         document.getElementById('food_amount').innerText = (food / uninfectedSurvivorsIdList.length).toFixed(2);
         document.getElementById('ammunition_amount').innerText = (ammunition / uninfectedSurvivorsIdList.length).toFixed(2);
         document.getElementById('medication_amount').innerText = (medication / uninfectedSurvivorsIdList.length).toFixed(2);
-        hideInvenoryLoadingIcon();
+        hideInventoryLoadingIcon();
         showInventoryReport();
 
     }).catch(function (error) {
@@ -115,6 +111,6 @@ function requestSurvivorItems(survivorId) {
     });
 }
 
-function hideInvenoryLoadingIcon() {
+function hideInventoryLoadingIcon() {
     document.getElementById('inventory_loading_icon').style.display = 'none';
 }
