@@ -17,6 +17,7 @@ function requestSurvivors() {
     request.responseType = 'json';
     request.onload = () => {
         survivorsList = request.response;
+
         const uninfected = filterUninfectedSurvivors(survivorsList);
         showSurvivors(uninfected);
     };

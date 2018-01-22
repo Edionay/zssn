@@ -93,3 +93,5 @@ function showPickedLonlat() {
     const messageField = document.getElementById('latlon');
     messageField.style.display = 'block';
 }
+
+
