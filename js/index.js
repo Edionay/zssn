@@ -1,7 +1,14 @@
 window.addEventListener("load", function () {
     requestInfectedAverage();
+    requestSurvivors();
 });
 
+
+let uninfectedSurvivorsIdList = null;
+let water = 0;
+let food = 0;
+let ammunition = 0;
+let medication = 0;
 
 function requestInfectedAverage() {
 
@@ -26,26 +33,88 @@ function requestInfectedAverage() {
     request.send();
 }
 
-function infectionReport(survivorsList) {
-    let infected = 0, uninfected = 0, totalOfSurvivors = 0;
+function showReportInfo() {
+    document.getElementById('infection_report').style.display = 'block';
+}
 
+function showInventoryInfo() {
+    document.getElementById('inventory_report').style.display = 'block';
+}
+
+function requestSurvivors() {
+    showLoadingIcon();
+    const requestUrl = 'http://zssn-backend-example.herokuapp.com/api/people.json';
+    const request = new XMLHttpRequest();
+
+    request.open('GET', requestUrl);
+    request.responseType = 'json';
+    request.onload = () => {
+        fillSurvivorsIdList(request.response);
+    };
+    request.send();
+}
+
+function fillSurvivorsIdList(survivorsList) {
+    uninfectedSurvivorsIdList = [];
     for (let survivor of survivorsList) {
-        if (survivor['infected?']) {
-            infected++;
-        } else {
-            uninfected++;
+        if (survivor['infected?'] === false) {
+            const survivorId = getSurvivorIdFromPath(survivor.location);
+            uninfectedSurvivorsIdList.push(survivorId);
         }
-        totalOfSurvivors++
     }
 
-    document.getElementById('total_of_survivors').innerText = totalOfSurvivors;
-    document.getElementById('uninfected_survivors').innerText = uninfected;
-    document.getElementById('infected_survivors').innerText = infected;
+    let promises = [];
+    for (let id of uninfectedSurvivorsIdList) {
+        promises.push(requestSurvivorItems(id));
+    }
+    const allPromises = Promise.all(promises);
+    allPromises.then(function (response) {
+        for (let inventory of response) {
+            for (let item of inventory) {
+                if (item.item.name === "Water") {
+                    water = water + item.quantity;
+                } else if (item.item.name === "Food") {
+                    food = food + item.quantity;
+                } else if (item.item.name === "Ammunition") {
+                    ammunition = food + item.quantity;
+                } else if (item.item.name === "Medication") {
+                    medication = food + item.quantity;
+                }
+            }
+        }
+        document.getElementById('water_amount').innerText = (water / uninfectedSurvivorsIdList.length).toFixed(2);
+        document.getElementById('food_amount').innerText = (food / uninfectedSurvivorsIdList.length).toFixed(2);
+        document.getElementById('ammunition_amount').innerText = (ammunition / uninfectedSurvivorsIdList.length).toFixed(2);
+        document.getElementById('medication_amount').innerText = (medication / uninfectedSurvivorsIdList.length).toFixed(2);
+        hideInvenoryLoadingIcon();
+        showInventoryReport();
 
-    console.log(`Survivors: ${totalOfSurvivors}, Infected: ${infected}, Uninfected: ${uninfected}`);
+    }).catch(function (error) {
+        console.log(error);
+    })
 }
 
-function showReportInfo() {
-    document.getElementById('report').style.display = 'block';
+function showInventoryReport() {
+    document.getElementById('inventory_report').style.display = 'block';
 }
 
+function requestSurvivorItems(survivorId) {
+    return new Promise(function (resolve, reject) {
+        const requestUrl = `http://zssn-backend-example.herokuapp.com/api/people/${survivorId}/properties.json`;
+        const request = new XMLHttpRequest();
+
+        request.open('GET', requestUrl);
+        request.responseType = 'json';
+        request.onload = function () {
+            resolve(request.response);
+        };
+        request.onerror = function () {
+            reject('Erro');
+        };
+        request.send();
+    });
+}
+
+function hideInvenoryLoadingIcon() {
+    document.getElementById('inventory_loading_icon').style.display = 'none';
+}

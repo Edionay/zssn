@@ -29,11 +29,6 @@ function filterUninfectedSurvivors(survivorsList) {
     return survivorsList.filter(survivor => !survivor['infected?'])
 }
 
-function getSurvivorIdFromPath(locationPath) {
-    const splitPath = locationPath.split('/');
-    return splitPath[5];
-}
-
 function flagSurvivor(event) {
 
     if (currentUser !== null) {

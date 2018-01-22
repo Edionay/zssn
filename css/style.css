@@ -20,14 +20,14 @@ body {
 }
 
 .left_col {
-    width: 45%;
+    width: 49%;
     display: inline-block;
     vertical-align: top;
     /*padding-right: 30px;*/
 }
 
 .right_col {
-    width: 45%;
+    width: 49%;
     display: inline-block;
     vertical-align: top;
 }
@@ -298,7 +298,7 @@ nav>a.active {
     margin-top: 0;
 }
 
-#report {
+.report {
     text-align: center;
     margin-top: 60px;
     display: none;
@@ -307,4 +307,8 @@ nav>a.active {
 .result_report {
     color: orange;
     font-weight: bold;
+}
+
+h3 {
+    text-align: center;
 }

@@ -94,4 +94,7 @@ function showPickedLonlat() {
     messageField.style.display = 'block';
 }
 
-
+function getSurvivorIdFromPath(locationPath) {
+    const splitPath = locationPath.split('/');
+    return splitPath[5];
+}
