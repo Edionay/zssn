@@ -10,6 +10,7 @@ let survivorsList = null;
 let currentUser = null;
 
 function requestSurvivors() {
+    showLoadingIcon();
     const requestUrl = 'http://zssn-backend-example.herokuapp.com/api/people.json';
     const request = new XMLHttpRequest();
 
@@ -57,6 +58,7 @@ function flagSurvivor(event) {
 }
 
 function showSurvivors(survivorsList) {
+    hideLoadingIcon();
     const survivorsTable = document.getElementById('survivors_list');
     for (const survivor of survivorsList) {
         const newRow = survivorsTable.insertRow();
@@ -75,7 +77,6 @@ function showSurvivors(survivorsList) {
         iconLink.addEventListener('click', flagSurvivor);
         iconToLink.id = getSurvivorIdFromPath(survivor.location);
         iconCell.appendChild(iconLink);
-
     }
 }
 
