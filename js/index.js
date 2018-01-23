@@ -1,14 +1,82 @@
 window.addEventListener("load", function () {
     requestInfectedAverage();
-    requestSurvivors();
+
+    showLoadingIcon();
+    requestUninfectedSurvivors().then(uninfectedIds => {
+
+        let promises = [];
+        for (let id of uninfectedIds) {
+            promises.push(requestSurvivorItems(id));
+        }
+
+        return Promise.all(promises);
+    }).then(inventoriesList => {
+
+        const totalInventory = sumInventoryItems(inventoriesList);
+        const itemsBySurvivor =  calculateItemsAverage(totalInventory, inventoriesList.length);
+        fillInventoryReportFields(itemsBySurvivor)
+        hideInventoryLoadingIcon();
+        showInventoryReport();
+
+    }).catch(() => {
+        console.log('ERROR');
+        hideInventoryLoadingIcon();
+    })
 });
 
+function fillInventoryReportFields(itemsBySurvivor) {
 
-let uninfectedSurvivorsIdList = null;
-let water = 0;
-let food = 0;
-let ammunition = 0;
-let medication = 0;
+    document.getElementById('water_amount').innerText = itemsBySurvivor.waterPerSurvivor.toFixed(2);
+    document.getElementById('food_amount').innerText = itemsBySurvivor.foodPerSurvivor.toFixed(2);
+    document.getElementById('ammunition_amount').innerText = itemsBySurvivor.ammunitionPerSurvivor.toFixed(2);
+    document.getElementById('medication_amount').innerText = itemsBySurvivor.medicationPerSurvivor.toFixed(2);
+}
+
+
+function calculateItemsAverage(inventory, totalSurvivors) {
+
+    let waterPerSurvivor = inventory.water / totalSurvivors;
+    let foodPerSurvivor = inventory.food / totalSurvivors;
+    let ammunitionPerSurvivor = inventory.ammunition / totalSurvivors;
+    let medicationPerSurvivor = inventory.medication / totalSurvivors;
+
+    return {
+        waterPerSurvivor,
+        foodPerSurvivor,
+        ammunitionPerSurvivor,
+        medicationPerSurvivor
+    }
+}
+
+function sumInventoryItems(inventoriesList) {
+
+    let water = 0;
+    let food = 0;
+    let ammunition = 0;
+    let medication = 0;
+
+    for (let inventory of inventoriesList) {
+        for (let item of inventory) {
+            if (item.item.name === "Water") {
+                water = water + item.quantity;
+            } else if (item.item.name === "Food") {
+                food = food + item.quantity;
+            } else if (item.item.name === "Ammunition") {
+                ammunition = food + item.quantity;
+            } else if (item.item.name === "Medication") {
+                medication = food + item.quantity;
+            }
+        }
+    }
+
+    return totalInventory = {
+        water,
+        food,
+        ammunition,
+        medication
+    }
+
+}
 
 function requestInfectedAverage() {
 
@@ -37,57 +105,60 @@ function showReportInfo() {
     document.getElementById('infection_report').style.display = 'block';
 }
 
-function requestSurvivors() {
-    showLoadingIcon();
-    const requestUrl = 'http://zssn-backend-example.herokuapp.com/api/people.json';
-    const request = new XMLHttpRequest();
+function requestUninfectedSurvivors() {
 
-    request.open('GET', requestUrl);
-    request.responseType = 'json';
-    request.onload = () => {
-        fillSurvivorsIdList(request.response);
-    };
-    request.send();
+    return new Promise((resolve, reject) => {
+        const requestUrl = 'http://zssn-backend-example.herokuapp.com/api/people.json';
+        const request = new XMLHttpRequest();
+
+        request.open('GET', requestUrl);
+        request.responseType = 'json';
+        request.onload = () => {
+
+            const filteredSurvivorsIds = request.response.filter(survivor => !survivor['infected?'])
+                .map(survivor => getSurvivorIdFromPath(survivor.location));
+            resolve(filteredSurvivorsIds);
+        };
+        request.onerror = reject;
+        request.send();
+    });
 }
 
 function fillSurvivorsIdList(survivorsList) {
-    uninfectedSurvivorsIdList = [];
-    for (let survivor of survivorsList) {
-        if (survivor['infected?'] === false) {
-            const survivorId = getSurvivorIdFromPath(survivor.location);
-            uninfectedSurvivorsIdList.push(survivorId);
-        }
-    }
 
-    let promises = [];
-    for (let id of uninfectedSurvivorsIdList) {
-        promises.push(requestSurvivorItems(id));
-    }
-    const allPromises = Promise.all(promises);
-    allPromises.then(function (response) {
-        for (let inventory of response) {
-            for (let item of inventory) {
-                if (item.item.name === "Water") {
-                    water = water + item.quantity;
-                } else if (item.item.name === "Food") {
-                    food = food + item.quantity;
-                } else if (item.item.name === "Ammunition") {
-                    ammunition = food + item.quantity;
-                } else if (item.item.name === "Medication") {
-                    medication = food + item.quantity;
-                }
-            }
-        }
-        document.getElementById('water_amount').innerText = (water / uninfectedSurvivorsIdList.length).toFixed(2);
-        document.getElementById('food_amount').innerText = (food / uninfectedSurvivorsIdList.length).toFixed(2);
-        document.getElementById('ammunition_amount').innerText = (ammunition / uninfectedSurvivorsIdList.length).toFixed(2);
-        document.getElementById('medication_amount').innerText = (medication / uninfectedSurvivorsIdList.length).toFixed(2);
-        hideInventoryLoadingIcon();
-        showInventoryReport();
+    // uninfectedSurvivorsIdList = survivorsList.filter(survivor => !survivor['infected?'])
+    //     .map(survivor => getSurvivorIdFromPath(survivor.location));
 
-    }).catch(function (error) {
-        console.log(error);
-    })
+    // let promises = [];
+    // for (let id of uninfectedSurvivorsIdList) {
+    //     promises.push(requestSurvivorItems(id));
+    // }
+    //
+    // const allPromises = Promise.all(promises);
+    // allPromises.then(function (response) {
+    //     for (let inventory of response) {
+    //         for (let item of inventory) {
+    //             if (item.item.name === "Water") {
+    //                 water = water + item.quantity;
+    //             } else if (item.item.name === "Food") {
+    //                 food = food + item.quantity;
+    //             } else if (item.item.name === "Ammunition") {
+    //                 ammunition = food + item.quantity;
+    //             } else if (item.item.name === "Medication") {
+    //                 medication = food + item.quantity;
+    //             }
+    //         }
+    //     }
+    //     document.getElementById('water_amount').innerText = (water / uninfectedSurvivorsIdList.length).toFixed(2);
+    //     document.getElementById('food_amount').innerText = (food / uninfectedSurvivorsIdList.length).toFixed(2);
+    //     document.getElementById('ammunition_amount').innerText = (ammunition / uninfectedSurvivorsIdList.length).toFixed(2);
+    //     document.getElementById('medication_amount').innerText = (medication / uninfectedSurvivorsIdList.length).toFixed(2);
+    //     hideInventoryLoadingIcon();
+    //     showInventoryReport();
+    //
+    // }).catch(function (error) {
+    //     hideInventoryLoadingIcon();
+    // })
 }
 
 function showInventoryReport() {
