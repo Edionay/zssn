@@ -11,7 +11,7 @@ let currentUser = null;
 
 function requestSurvivors() {
     showLoadingIcon();
-    const requestUrl = 'http://zssn-backend-example.herokuapp.com/api/people.json';
+    const requestUrl = 'https://zssn-backend-example.herokuapp.com/api/people.json';
     const request = new XMLHttpRequest();
 
     request.open('GET', requestUrl);
