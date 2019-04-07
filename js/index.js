@@ -81,7 +81,7 @@ function sumInventoryItems(inventoriesList) {
 function requestInfectedAverage() {
 
     showLoadingIcon();
-    const requestUrl = 'http://zssn-backend-example.herokuapp.com/api/report/infected.json';
+    const requestUrl = 'https://zssn-backend-example.herokuapp.com/api/report/infected.json';
     const request = new XMLHttpRequest();
 
     request.open('GET', requestUrl);
@@ -108,7 +108,7 @@ function showReportInfo() {
 function requestUninfectedSurvivors() {
 
     return new Promise((resolve, reject) => {
-        const requestUrl = 'http://zssn-backend-example.herokuapp.com/api/people.json';
+        const requestUrl = 'https://zssn-backend-example.herokuapp.com/api/people.json';
         const request = new XMLHttpRequest();
 
         request.open('GET', requestUrl);
