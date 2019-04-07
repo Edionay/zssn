@@ -41,7 +41,7 @@ function onSubmitNewSurvivor(event) {
         formToBeSubmitted.append('items]', myForm.elements.namedItem('items').value);
 
         const request = new XMLHttpRequest();
-        request.open('POST', 'http://zssn-backend-example.herokuapp.com/api/people.json');
+        request.open('POST', 'https://zssn-backend-example.herokuapp.com/api/people.json');
         request.responseType = 'json';
         request.onload = () => {
             hideLoadingIcon();
