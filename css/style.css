@@ -63,7 +63,6 @@ body {
 
 .item {
     margin: 10px;
-
 }
 
 #person_name {
@@ -86,15 +85,12 @@ body {
     padding-left: 15px;
 }
 
-#user_input {
-}
+#user_input {}
 
 #infected_name {
     width: 345px;
     text-align: center;
-
 }
-
 
 #person_age {
     text-align: right;
@@ -104,11 +100,11 @@ body {
 }
 
 .form_element {
-    margin: 20px 20px 20px 0px;
+    margin: 20px 20px 20px 0;
 }
 
 .flag_input {
-    margin: 20px 20px 20px 0px;
+    margin: 20px 20px 20px 0;
     text-align: center;
 }
 
@@ -263,7 +259,9 @@ nav {
     border-bottom: 1px solid lightgray;
 }
 
+
 /* Style the links inside the navigation bar */
+
 nav>a {
     float: left;
     color: black;

@@ -1,4 +1,4 @@
-window.addEventListener("load", function () {
+window.addEventListener("load", function() {
     document.getElementById('person_id').addEventListener('input', requestSurvivor);
     document.getElementById('person_id').value = '';
     disableUpdateButton();
@@ -14,7 +14,6 @@ function enableUpdateButton() {
     document.getElementById('update_button').disabled = false;
 }
 
-
 function makeSurvivorInfoVisible() {
     const survivorInfo = document.getElementById('survivor_data');
     survivorInfo.style.display = 'block';
@@ -24,8 +23,6 @@ function makeSurvivorInfoInvisible() {
     const survivorInfo = document.getElementById('survivor_data');
     survivorInfo.style.display = 'none';
 }
-
-
 
 function showSurvivor(survivor) {
     document.getElementById('survivorName').innerText = survivor.name;
@@ -39,7 +36,7 @@ function parsePointStringToLatLon(pointString) {
     const pointStringComponents = pointString.split(' ');
     const longitude = pointStringComponents[1].slice(1);
     const latitude = pointStringComponents[2].slice(0, pointStringComponents[2].length - 1);
-    return {latitude, longitude};
+    return { latitude, longitude };
 }
 
 function updateSurvivorLocation() {
@@ -70,13 +67,12 @@ function updateSurvivorLocation() {
                 hideLoadingIcon();
                 showSurvivor(currentSurvivor);
                 makeSurvivorInfoVisible();
-            }
-            else {
+            } else {
                 displayInfoMessage('ERROR!', 'Unknown');
             }
         };
         request.send(form);
-    } else  {
+    } else {
         disableUpdateButton()
     }
 

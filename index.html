@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,47 +9,39 @@
     <link rel="stylesheet" type="text/css" href="css/loader.css">
     <script src="js/index.js"></script>
     <script src="js/shared.js"></script>
+    <title>ZSSN - Home Page</title>
 </head>
+
 <body>
+    <nav>
+        <a class="active" href="index.html">Home</a>
+        <a href="new_survivor.html">Register Survivor</a>
+        <a href="update_location.html">Location Update</a>
+        <a href="flag_infected.html">Report Infected</a>
 
-<nav>
-    <a class="active" href="index.html">Home</a>
-    <a href="new_survivor.html">Register Survivor</a>
-    <a href="update_location.html">Location Update</a>
-    <a href="flag_infected.html">Report Infected</a>
-
-    <span id="logo">ZSSN</span>
-</nav>
-
-
-<div class="wrapper">
-
-    <h1 class="title">ZSSN</h1>
-    <h2 id="subtitle">Zombie Survival Social Network</h2>
-    <div class="left_col">
-
-        <h3>Infection report</h3>
-        <div id="loading_icon" class="loading_icon"></div>
-
-        <div class="report" id="infection_report">
-            <p>Infected survivors: <span class="result_report" id="infected_rate"></span></p>
-            <p>Uninfected survivors: <span class="result_report" id="uninfected_rate"></span></p>
+        <span id="logo">ZSSN</span>
+    </nav>
+    <div class="wrapper">
+        <h1 class="title">ZSSN</h1>
+        <h2 id="subtitle">Zombie Survival Social Network</h2>
+        <div class="left_col">
+            <h3>Infection report</h3>
+            <div id="loading_icon" class="loading_icon"></div>
+            <div class="report" id="infection_report">
+                <p>Infected survivors: <span class="result_report" id="infected_rate"></span></p>
+                <p>Uninfected survivors: <span class="result_report" id="uninfected_rate"></span></p>
+            </div>
+        </div>
+        <div class="right_col">
+            <h3>Average amount resources by survivor</h3>
+            <div class="loading_icon" id="inventory_loading_icon"></div>
+            <div class="report" id="inventory_report">
+                <p>Water: <span class="result_report" id="water_amount"></span></p>
+                <p>Food: <span class="result_report" id="food_amount"></span></p>
+                <p>Ammunition: <span class="result_report" id="ammunition_amount"></span></p>
+                <p>Medication: <span class="result_report" id="medication_amount"></span></p>
+            </div>
         </div>
     </div>
-    <div class="right_col">
-        <h3>Average amount resources by survivor</h3>
-        <div class="loading_icon" id="inventory_loading_icon"></div>
-        <div class="report" id="inventory_report">
-            <p>Water: <span class="result_report" id="water_amount"></span></p>
-            <p>Food: <span class="result_report" id="food_amount"></span></p>
-            <p>Ammunition: <span class="result_report" id="ammunition_amount"></span></p>
-            <p>Medication: <span class="result_report" id="medication_amount"></span></p>
-        </div>
-
-    </div>
-
-
-
-</div>
 </body>
 </html>

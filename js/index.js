@@ -1,4 +1,4 @@
-window.addEventListener("load", function () {
+window.addEventListener("load", function() {
     requestInfectedAverage();
 
     showLoadingIcon();
@@ -13,13 +13,13 @@ window.addEventListener("load", function () {
     }).then(inventoriesList => {
 
         const totalInventory = sumInventoryItems(inventoriesList);
-        const itemsBySurvivor =  calculateItemsAverage(totalInventory, inventoriesList.length);
-        fillInventoryReportFields(itemsBySurvivor)
+        const itemsBySurvivor = calculateItemsAverage(totalInventory, inventoriesList.length);
+        fillInventoryReportFields(itemsBySurvivor);
         hideInventoryLoadingIcon();
         showInventoryReport();
 
-    }).catch(() => {
-        console.log('ERROR');
+    }).catch(error => {
+        console.error(error.message);
         hideInventoryLoadingIcon();
     })
 });
@@ -75,7 +75,6 @@ function sumInventoryItems(inventoriesList) {
         ammunition,
         medication
     }
-
 }
 
 function requestInfectedAverage() {
@@ -88,9 +87,8 @@ function requestInfectedAverage() {
     request.responseType = 'json';
     request.onload = () => {
 
-        let infectedAverage = request.response.report.average_infected;
-        let uninfectedAverage = 1 - infectedAverage;
-
+        const infectedAverage = request.response.report.average_infected;
+        const uninfectedAverage = 1 - infectedAverage;
 
         document.getElementById('infected_rate').innerText = (infectedAverage * 100).toFixed(2) + "%";
         document.getElementById('uninfected_rate').innerText = (uninfectedAverage * 100).toFixed(2) + "%";
@@ -124,58 +122,21 @@ function requestUninfectedSurvivors() {
     });
 }
 
-function fillSurvivorsIdList(survivorsList) {
-
-    // uninfectedSurvivorsIdList = survivorsList.filter(survivor => !survivor['infected?'])
-    //     .map(survivor => getSurvivorIdFromPath(survivor.location));
-
-    // let promises = [];
-    // for (let id of uninfectedSurvivorsIdList) {
-    //     promises.push(requestSurvivorItems(id));
-    // }
-    //
-    // const allPromises = Promise.all(promises);
-    // allPromises.then(function (response) {
-    //     for (let inventory of response) {
-    //         for (let item of inventory) {
-    //             if (item.item.name === "Water") {
-    //                 water = water + item.quantity;
-    //             } else if (item.item.name === "Food") {
-    //                 food = food + item.quantity;
-    //             } else if (item.item.name === "Ammunition") {
-    //                 ammunition = food + item.quantity;
-    //             } else if (item.item.name === "Medication") {
-    //                 medication = food + item.quantity;
-    //             }
-    //         }
-    //     }
-    //     document.getElementById('water_amount').innerText = (water / uninfectedSurvivorsIdList.length).toFixed(2);
-    //     document.getElementById('food_amount').innerText = (food / uninfectedSurvivorsIdList.length).toFixed(2);
-    //     document.getElementById('ammunition_amount').innerText = (ammunition / uninfectedSurvivorsIdList.length).toFixed(2);
-    //     document.getElementById('medication_amount').innerText = (medication / uninfectedSurvivorsIdList.length).toFixed(2);
-    //     hideInventoryLoadingIcon();
-    //     showInventoryReport();
-    //
-    // }).catch(function (error) {
-    //     hideInventoryLoadingIcon();
-    // })
-}
-
 function showInventoryReport() {
     document.getElementById('inventory_report').style.display = 'block';
 }
 
 function requestSurvivorItems(survivorId) {
-    return new Promise(function (resolve, reject) {
-        const requestUrl = `http://zssn-backend-example.herokuapp.com/api/people/${survivorId}/properties.json`;
+    return new Promise(function(resolve, reject) {
+        const requestUrl = `https://zssn-backend-example.herokuapp.com/api/people/${survivorId}/properties.json`;
         const request = new XMLHttpRequest();
 
         request.open('GET', requestUrl);
         request.responseType = 'json';
-        request.onload = function () {
+        request.onload = () => {
             resolve(request.response);
         };
-        request.onerror = function () {
+        request.onerror = () => {
             reject('Erro');
         };
         request.send();

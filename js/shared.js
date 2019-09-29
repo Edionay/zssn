@@ -32,7 +32,7 @@ function onSubmitNewSurvivor(event) {
             "Water:" + water + ";Food:" + food + ";Medicine:" + medication + ";Ammunition:" + ammunition;
         const lat = document.getElementById('latitude').innerText;
         const lon = document.getElementById('longitude').innerText;
-        myForm.elements.namedItem('person[lonlat]').value = convertLatlonToPointString({lat, lon});
+        myForm.elements.namedItem('person[lonlat]').value = convertLatlonToPointString({ lat, lon });
 
         formToBeSubmitted.append('person[name]', myForm.elements.namedItem('person[name]').value);
         formToBeSubmitted.append('person[age]', myForm.elements.namedItem('person[age]').value);
@@ -56,7 +56,6 @@ function onSubmitNewSurvivor(event) {
         };
         request.send(formToBeSubmitted);
     }
-
     event.preventDefault()
 }
 

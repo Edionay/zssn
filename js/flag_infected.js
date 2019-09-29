@@ -1,4 +1,4 @@
-window.addEventListener("load", function () {
+window.addEventListener("load", function() {
     document.getElementById('user_id').value = '';
     document.getElementById('infected_name').value = '';
     requestSurvivors();

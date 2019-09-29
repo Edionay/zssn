@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,89 +9,90 @@
     <link rel="stylesheet" type="text/css" href="css/loader.css">
     <script src="js/map.js"></script>
     <script src="js/shared.js"></script>
+    <title>ZSSN - New Survivor</title>
 </head>
+
 <body>
 
-<nav>
-    <a href="index.html">Home</a>
-    <a class="active" href="new_survivor.html">Register Survivor</a>
-    <a href="update_location.html">Location Update</a>
-    <a href="flag_infected.html">Report Infected</a>
-    <span id="logo">ZSSN</span>
-</nav>
+    <nav>
+        <a href="index.html">Home</a>
+        <a class="active" href="new_survivor.html">Register Survivor</a>
+        <a href="update_location.html">Location Update</a>
+        <a href="flag_infected.html">Report Infected</a>
+        <span id="logo">ZSSN</span>
+    </nav>
 
 
-<form method="post" class="wrapper" id="new_survivor_form" onsubmit="onSubmitNewSurvivor(event)">
-    <h1 id="title">New Survivor</h1>
-    <div class="left_col">
-        <div class="form_element">
-            <label for="person_name">Name:</label>
-            <input type="text" name="person[name]" id="person_name" placeholder="Enter the full name" required>
-        </div>
-
-        <div class="form_element">
-            <label for="person_age">Age:</label>
-            <input type="number" min="0" name="person[age]" id="person_age"
-                   placeholder="e.g.: 20" required>
-        </div>
-
-        <div class="form_element">
-            <label id="gender_label">Gender:</label>
-            <input type="radio" value="M" id="male" name="person[gender]" required>
-            <label for="male">Male</label>
-            <input type="radio" value="F" id="female" name="person[gender]" required>
-            <label for="female">Female</label>
-        </div>
-
-        <div class="form_element" id="inventory">
-            <label>Inventory</label>
-            <div class="item">
-                <input type="number" min="0" id="water" value="0" required>
-                <label class="item" for="water">Water</label>
+    <form method="post" class="wrapper" id="new_survivor_form" onsubmit="onSubmitNewSurvivor(event)">
+        <h1 id="title">New Survivor</h1>
+        <div class="left_col">
+            <div class="form_element">
+                <label for="person_name">Name:</label>
+                <input type="text" name="person[name]" id="person_name" placeholder="Enter the full name" required>
             </div>
-            <div class="item">
-                <input type="number" min="0" id="food" value="0" required>
-                <label class="item" for="food">Food</label>
+
+            <div class="form_element">
+                <label for="person_age">Age:</label>
+                <input type="number" min="0" name="person[age]" id="person_age" placeholder="e.g.: 20" required>
             </div>
-            <div class="item">
-                <input type="number" min="0" id="medication" value="0" required>
-                <label class="item" for="medication">Medication</label>
+
+            <div class="form_element">
+                <label id="gender_label">Gender:</label>
+                <input type="radio" value="M" id="male" name="person[gender]" required>
+                <label for="male">Male</label>
+                <input type="radio" value="F" id="female" name="person[gender]" required>
+                <label for="female">Female</label>
             </div>
-            <div class="item">
-                <input type="number" min="0" id="ammunition" value="0" required>
-                <label class="item" for="ammunition">Ammunition</label>
+
+            <div class="form_element" id="inventory">
+                <label>Inventory</label>
+                <div class="item">
+                    <input type="number" min="0" id="water" value="0" required>
+                    <label class="item" for="water">Water</label>
+                </div>
+                <div class="item">
+                    <input type="number" min="0" id="food" value="0" required>
+                    <label class="item" for="food">Food</label>
+                </div>
+                <div class="item">
+                    <input type="number" min="0" id="medication" value="0" required>
+                    <label class="item" for="medication">Medication</label>
+                </div>
+                <div class="item">
+                    <input type="number" min="0" id="ammunition" value="0" required>
+                    <label class="item" for="ammunition">Ammunition</label>
+                </div>
+                <input type="hidden" name="items">
             </div>
-            <input type="hidden" name="items">
+
+            <input type="hidden" name="person[lonlat]">
+        </div>
+        <div class="right_col">
+
+            <p class="form_element" id="location_title">Location (click on the map to change)</p>
+            <div id="map"></div>
+
+            <div id="lonlat_pick_warning">
+                <p>Please, pick a valid location</p>
+            </div>
+
+            <div id="latlon">
+                <p>Longitude: <span id="longitude"></span> Longitude: <span id="latitude"></span></p>
+            </div>
+            <div id="submit_button">
+                <input type="submit" value="Send">
+            </div>
         </div>
 
-        <input type="hidden" name="person[lonlat]">
-    </div>
-    <div class="right_col">
+        <div class="loading_icon" id="loading_icon"></div>
 
-        <p class="form_element" id="location_title">Location (click on the map to change)</p>
-        <div id="map"></div>
-
-        <div id="lonlat_pick_warning">
-            <p>Please, pick a valid location</p>
+        <div id="info_message">
+            <p id="info_type"></p>
+            <p id="info_details"></p>
         </div>
 
-        <div id="latlon">
-            <p>Longitude: <span id="longitude"></span> Longitude: <span id="latitude"></span></p>
-        </div>
-        <div id="submit_button">
-            <input type="submit" value="Send">
-        </div>
-    </div>
-
-    <div class="loading_icon" id="loading_icon"></div>
-
-    <div id="info_message">
-        <p id="info_type"></p>
-        <p id="info_details"></p>
-    </div>
-
-</form>
+    </form>
 </body>
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJ5vS1Yb4hHCteVkALhYr6yUagQHYBAnM&callback=initMap"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJ5vS1Yb4hHCteVkALhYr6yUagQHYBAnM&callback=initMap"></script>
+
 </html>
