@@ -1,5 +1,5 @@
 # ZSSN - Zombie Survival Social Network
-ZSSN is a pure JavaScript based application that consumes [ZSSN API](http://zssn-backend-example.herokuapp.com/swagger-api/index.html).
+ZSSN is a pure JavaScript based application that consumes [ZSSN REST API](http://zssn-backend-example.herokuapp.com/swagger-api/index.html).
 The problem it solves can be found [here](https://gist.github.com/akitaonrails/694fc9e85735c400d7e0dc8e79576288).
 
 ## Getting Started
